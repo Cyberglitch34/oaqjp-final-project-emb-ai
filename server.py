@@ -12,7 +12,11 @@ def emotion_detector_route():
     text_to_analyze = request.args.get('textToAnalyze')
     result = emotion_detector(text_to_analyze)
 
-    # Create the formatted response
+    # Error handling: show a friendly message if result is invalid
+    if result['dominant_emotion'] is None:
+        return "Invalid text! Please try again!"
+
+    # Normal output
     response = (
         f"For the given statement, the system response is "
         f"'anger': {result['anger']}, "
